@@ -15,6 +15,7 @@ class App(ctk.CTk):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
+        # Title Bar
         self.title_bar = ctk.CTkFrame(
                         master=self,
                         height=35,
@@ -23,11 +24,27 @@ class App(ctk.CTk):
                     )
                 
         self.title_bar.grid_propagate(False)
+        self.title_bar.grid_columnconfigure(0, weight=1)
+        
         self.title_bar.grid(row=0, column=0, sticky="ew")
+
+        self.close_btn = ctk.CTkButton(
+            self.title_bar,
+            text="x",
+            width=35,
+            height=35,
+            corner_radius=0,
+            fg_color="transparent",
+            hover_color="red",
+            command=self.destroy
+        )
+        self.close_btn.grid(row=0, column=1, sticky="e")
+        #TODO: make application run in the background instead of being obliterated
 
         self.title_bar.bind("<ButtonPress-1>", self.drag_start)
         self.title_bar.bind("<B1-Motion>", self.drag_motion)
 
+        # Copy Content
         self.copy_content_frame = ctk.CTkScrollableFrame(
                         master=self, 
                         width=400, 
