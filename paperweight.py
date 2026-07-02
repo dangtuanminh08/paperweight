@@ -2,6 +2,8 @@ import customtkinter as ctk
 import pyperclip
 import threading
 import time
+from pynput import keyboard
+
 
 class App(ctk.CTk):
     def __init__(self):
@@ -36,10 +38,10 @@ class App(ctk.CTk):
             corner_radius=0,
             fg_color="transparent",
             hover_color="red",
-            command=self.destroy
+            command=self.withdraw
         )
+
         self.close_btn.grid(row=0, column=1, sticky="e")
-        #TODO: make application run in the background instead of being obliterated
 
         self.title_bar.bind("<ButtonPress-1>", self.drag_start)
         self.title_bar.bind("<B1-Motion>", self.drag_motion)
@@ -56,6 +58,28 @@ class App(ctk.CTk):
 
         self.render_content()
         self.start_thread()
+        self.hotkey_listener()
+
+
+        
+    def hotkey_listener(self):
+        """
+        Allows Paperweight to listen for a specific keybind that will open the window.
+        """
+        def on_press():
+            def show():
+                self.deiconify()
+                self.lift()
+                self.focus_force()
+            self.after(0, show)
+        
+        def listen():
+            with keyboard.GlobalHotKeys({"<ctrl>+<shift>+b": on_press}) as h:
+                h.join()
+
+        t = threading.Thread(target=listen, daemon=True)
+        t.start()
+
 
     def drag_start(self, event):
         """
@@ -81,6 +105,7 @@ class App(ctk.CTk):
 
         TODO: Pin button (copy will stay locally on the computer)
         """
+
         for widget in self.copy_content_frame.winfo_children():
             widget.destroy()
 
@@ -94,6 +119,7 @@ class App(ctk.CTk):
             copy_btn = ctk.CTkButton(
                 button_row,
                 text=display,
+                width=280,
                 anchor="w",
                 fg_color="grey",
                 text_color=("black", "white"),
