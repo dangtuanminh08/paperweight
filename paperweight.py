@@ -12,10 +12,12 @@ class App(ctk.CTk):
         self.title("Paperweight")
         self.overrideredirect(True) # Gets rid of the Windows title bar
 
+        self.app_font = ctk.CTkFont(family="Calibri", size=13)
         self.copy_history = [] 
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
 
         # Title Bar
         self.title_bar = ctk.CTkFrame(
@@ -38,7 +40,7 @@ class App(ctk.CTk):
             corner_radius=0,
             fg_color="transparent",
             hover_color="red",
-            command=self.withdraw
+            command=self.destroy
         )
 
         self.close_btn.grid(row=0, column=1, sticky="e")
@@ -48,19 +50,18 @@ class App(ctk.CTk):
 
         # Copy Content
         self.copy_content_frame = ctk.CTkScrollableFrame(
-                        master=self, 
-                        width=400, 
-                        height=320,
-                        fg_color="transparent"
-                    )
+            master=self, 
+            width=400,
+            height=320,
+            fg_color="transparent"
+        )
         
-        self.copy_content_frame.grid(row=1, column=0, pady=16)
+        self.copy_content_frame.grid(row=1, column=0, pady=16, sticky="ew")
+        self.copy_content_frame._scrollbar.configure(width=12)
 
         self.render_content()
         self.start_thread()
         self.hotkey_listener()
-
-
         
     def hotkey_listener(self):
         """
@@ -71,6 +72,7 @@ class App(ctk.CTk):
                 self.deiconify()
                 self.lift()
                 self.focus_force()
+                
             self.after(0, show)
         
         def listen():
@@ -110,23 +112,32 @@ class App(ctk.CTk):
             widget.destroy()
 
         for i, item in enumerate(self.copy_history):
-            display = item[:100] + "..." if len(item) > 100 else item
+            display = item.strip()[:90] + "..." if len(item) > 90 else item.strip()
 
             button_row = ctk.CTkFrame(self.copy_content_frame, fg_color="transparent")
             button_row.grid(row=i, column=0, sticky="ew", padx=4, pady=2)
             button_row.grid_columnconfigure(0, weight=1)
 
-            copy_btn = ctk.CTkButton(
+            copy_btn = ctk.CTkLabel(
                 button_row,
                 text=display,
-                width=280,
-                anchor="w",
+                font=self.app_font,
+                width=343,
+                height=61,
+                anchor="nw",      
+                justify="left",
                 fg_color="grey",
-                text_color=("black", "white"),
-                hover_color=("green", "blue"),
-                command=lambda val=item: self.copy_content(val)
+                text_color="white",
+                padx=7,
+                pady=7,
+                corner_radius=6
             )
-            copy_btn.grid(row=i, column=0, sticky="ew", padx=3)
+            copy_btn.grid(row=i, column=0, padx=3)
+            copy_btn.grid_propagate(False)
+            copy_btn.bind("<Button-1>", lambda e, val=item: self.copy_content(val))
+            copy_btn.bind("<Enter>", lambda e, btn=copy_btn: btn.configure(fg_color=("green", "blue")))
+            copy_btn.bind("<Leave>", lambda e, btn=copy_btn: btn.configure(fg_color="grey"))
+            
 
             delete_btn = ctk.CTkButton(
                 button_row,
