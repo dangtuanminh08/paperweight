@@ -239,7 +239,7 @@ class App(ctk.CTk):
                         self.after(0, self.render_content)
                 except pyperclip.PyperclipException as e:
                     print(e)
-                    pass #TODO: Could not be copied notif
+                    pass
                 time.sleep(0.5) # Rate at which Paperweight updates the copy history (NOT renders)
         clipboard_thread = threading.Thread(target=poll, daemon=True)
         clipboard_thread.start()
