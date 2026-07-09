@@ -10,10 +10,10 @@ This is not meant to be impressive, more of a practice repo for me to make good 
 ---
 ## Installation
 1. Make sure your computer has Windows OS installed
-2. Click on `paperweight.exe`
-3. Click on the download symbol
-<img width="134" height="53" alt="image" src="https://github.com/user-attachments/assets/e407bca3-99dd-4dc0-aef6-2792251dbb08" />
+2. Go to Releases, at the right side of your screen
+<img width="203" height="93" alt="image" src="https://github.com/user-attachments/assets/1ce1632d-7e15-415d-bfb0-0f2ce852c357" />
 
+3. Press `paperweight.exe`
 4. Launch paperweight.exe and enjoy!
 
 If Windows attempts to "protect your PC", you can press "More info" and then "Run anyway". No, I'm not evil. 
@@ -33,11 +33,10 @@ If you don't want to manually launch the app all the time, you can make it a sta
 For Linux, it depends on what distribution you have. Please research yourself, sorry 😿
 
 ## Editing The Code
-1. Click on `paperweight.py`
-2. Click on the download symbol (same as above)
-3. Time to make a `venv`! Move `paperweight.py` into a project directory.
-
-Go to your project directory and run these lines (in order)
+1. Go to Releases, at the right side of your screen (same as above)
+2. Download the source code and extract the folder.
+3. Time to make a `venv`! In a terminal, navigate to the extracted folder.
+4. Go to your project directory and run these lines (in order)
 
 Windows (Command Prompt):
 ```
