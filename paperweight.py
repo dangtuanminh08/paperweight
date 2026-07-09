@@ -103,9 +103,6 @@ class App(ctk.CTk):
         self.start_clipboard_listener()
         self.start_hotkey_listener()
 
-    def change_appearanace(self):
-        ctk.set_appearance_mode(self.switch_var.get())
-        
     def start_hotkey_listener(self):
         """
         Allows Paperweight to listen for a specific keybind that will open the window.
@@ -123,7 +120,6 @@ class App(ctk.CTk):
 
         hotkey_thread = threading.Thread(target=listen, daemon=True)
         hotkey_thread.start()
-
 
     def drag_start(self, event):
         """
