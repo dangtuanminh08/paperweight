@@ -48,7 +48,7 @@ class App(ctk.CTk):
 
         self.title_label = ctk.CTkLabel(
                 self.title_bar,
-                text="Paperweight",
+                text="Paperweight (ctrl + alt + v)",
                 font=self.app_font,
                 fg_color="transparent",
                 text_color=self.text_colorset,
