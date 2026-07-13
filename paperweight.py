@@ -10,6 +10,7 @@ class App(ctk.CTk):
         self.geometry("400x400")
         self.title("Paperweight")
         self.overrideredirect(True) # Gets rid of the Windows title bar
+        self.wm_attributes("-topmost", True) # Makes the window stay on top until you close it
 
         self.app_font = ctk.CTkFont(family="Calibri", size=-13)
         self.button_colorset = ("white", "#333333")  
